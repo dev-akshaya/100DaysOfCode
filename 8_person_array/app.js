@@ -21,7 +21,7 @@ async function getRamdomUser() {
 
   const newUser = {
     name: `${user.name.first} ${user.name.last}`,
-    money: Math.floor(Math.random() * 1000000000)
+    money: Math.floor(Math.random() * 100)
   }
 
   addUser(newUser)
@@ -49,3 +49,46 @@ function formatMoney(number){
   return '$' + number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
+// Add A New User ------------------------------
+addUserBtn.addEventListener('click', getRamdomUser);
+
+// Double the money ------------------------------
+doubleBtn.addEventListener('click', doubleMoney);
+function doubleMoney() {
+  data = data.map( user => {
+    return { money: user.money * 2}
+  })
+  updateDOM();
+}
+
+// Sort by Richest ------------------------------
+sortBtn.addEventListener('click', sortByRichest);
+function sortByRichest() {
+  data.sort( (a, b) => {
+    return b.money - a.money;
+  })
+  updateDOM();
+}
+
+// Show Only Richest ------------------------------
+showMillionairesBtn.addEventListener('click', showRichest);
+function showRichest() {
+
+  data = data.filter(user => {
+    return user.money > 50;
+  });
+  updateDOM();
+}
+
+calculateWealthBtn.addEventListener('click', calculateWealth);
+function calculateWealth(){
+  const wealth = data.reduce((acc, user) => 
+    (acc = acc + user.money), 0
+  );
+
+  console.log(wealth);
+  const wealthElement = document.createElement('div');
+  wealthElement.innerHTML = `<h3>Total Wealth: <strong> ${wealth} </strong></h3>`;
+  main.appendChild(wealthElement);
+}
+// console.log(data);
