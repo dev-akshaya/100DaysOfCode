@@ -107,3 +107,21 @@ function addMealToDOM(meal) {
     </div>
   `;
 }
+
+// -----------------------------------------------------------
+// Get Random Meal -------------------------------------------
+// -----------------------------------------------------------
+random.addEventListener('click', getRandomMeal);
+
+function getRandomMeal(){
+
+  resultHeading.innerHTML = '';
+  mealsElement.innerHTML = '';
+
+  fetch('https://www.themealdb.com/api/json/v1/1/random.php')
+    .then(res => res.json())
+    .then(data => {
+      const meal = data.meals[0];
+      addMealToDOM(meal);
+    });
+}
